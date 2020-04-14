@@ -16,6 +16,7 @@ module.exports = {
         //gerando um id unico
         const id = crypto.randomBytes(4).toString('HEX');
         
+        
         await connection('ongs').insert({
             id,
             name,
