@@ -28,7 +28,11 @@ form input{
     border: 1px solid #dcdcdc;
     border-radius: 8px;
     padding: 24px;
+    transition:all .3s ease-in;
+}
 
+form input:focus{
+    border-color: #E02041;
 }
 
 form textarea{

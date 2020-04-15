@@ -14,10 +14,16 @@ export default function Register(){
   const [whatsapp,setWhatsapp] = useState('');
   const [city,setCity] = useState('');
   const [uf,setUf] = useState('');
+  const [isOpen,setOpen] = useState(false);
+  const [idUser,setIdUser] = useState('');
 
   const history = useHistory();
 
-  async function handkeRegister(e){
+  function voltar(){
+     history.push('/');
+  }
+
+  async function handleRegister(e){
     e.preventDefault();
     const data ={
       name,
@@ -28,13 +34,15 @@ export default function Register(){
 
       try{
         const response = await api.post('ongs',data);
-      
-      alert(`Seu ID de acesso:${response.data.id}`);
-      history.push('/');
+        setIdUser(response.data.id);
+        setOpen(true);
+      // alert(`Seu ID de acesso:${response.data.id}`);
+      // 
       }catch(err){
           
-          alert('erro no cadastro, tente novamente');
+          alert('Erro no cadastro, tente novamente');
       }
+     
   }
 
     return (
@@ -52,7 +60,9 @@ export default function Register(){
               Voltar ao Logon
             </Link>
           </section>
-          <form onSubmit={handkeRegister}>
+
+
+          <form onSubmit={handleRegister}>
             <input
               placeholder="Nome da ONG"
               value={name}
@@ -91,6 +101,25 @@ export default function Register(){
             </button>
           </form>
         </div>
+        {isOpen ? (
+          <div className="modal">
+            <div className="modal-content">
+              <h1>Cadastro Realizado</h1>
+              <div className="linhaid">
+                <p>Seu ID de Acesso é:</p>
+                <span>{idUser}</span>
+              </div>
+
+              <p>
+                Guarde muito bem este ID, apenas com eles você poderá solicitar
+                ajuda dos heróis.
+              </p>
+              <button className="button" type="submit" onClick={voltar}>
+                Entendi, voltar ao Logon
+              </button>
+            </div>
+          </div>
+        ) : null}
       </div>
     );
 }
